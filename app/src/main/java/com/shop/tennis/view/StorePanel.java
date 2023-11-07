@@ -25,7 +25,7 @@ public class StorePanel extends BaseLayout {
   private static StorePanel INSTANCE;
   private ICarService carService;
   private IStorageService storageService;
-  private StoreTable tablemodel; 
+  private StoreTable tableModel;
 
   private StorePanel(IStorageService storageService, ICarService carService) {
     this.carService = carService;
@@ -51,20 +51,20 @@ public class StorePanel extends BaseLayout {
     nameSearchPanel.add(nameSearchLabel);
     nameSearchPanel.add(textBox);
 
-    var brandSerachPanel = new JPanel();
+    var brandSearchPanel = new JPanel();
     var brandSearchLabel = new JLabel("Brand: ", JLabel.LEFT);
     var brandsSelector = new JComboBox<String>();
 
     for (var b: Brands.values()) {
       brandsSelector.addItem(b.name());
     }
-    brandSerachPanel.setLayout(new BoxLayout(brandSerachPanel, BoxLayout.X_AXIS)); 
-    brandSerachPanel.add(brandSearchLabel);
-    brandSerachPanel.add(brandsSelector);
+    brandSearchPanel.setLayout(new BoxLayout(brandSearchPanel, BoxLayout.X_AXIS));
+    brandSearchPanel.add(brandSearchLabel);
+    brandSearchPanel.add(brandsSelector);
 
     filterPanel.add(nameSearchPanel); 
     filterPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-    filterPanel.add(brandSerachPanel);
+    filterPanel.add(brandSearchPanel);
 
     var buttonsPanel = new JPanel();
     buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
@@ -84,14 +84,14 @@ public class StorePanel extends BaseLayout {
 
   private JScrollPane buildTable() {
     var table = new JTable();
-    this.tablemodel = new StoreTable(table, carService, storageService);
+    this.tableModel = new StoreTable(table, carService, storageService);
 
-    table.setModel(this.tablemodel);
+    table.setModel(this.tableModel);
     return new JScrollPane(table);
   }
 
   private JLabel getTitleText() {
-    var title = new JLabel("Productos", JLabel.CENTER);
+    var title = new JLabel("Products", JLabel.CENTER);
     title.setFont(new Font("Sans", Font.BOLD, 20));
 
     return title;

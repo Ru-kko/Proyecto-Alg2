@@ -31,10 +31,10 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        IStorageService sotore = new TennisShopService();
+        IStorageService store = new TennisShopService();
         ICarService car = new CarService();
 
-        Main.App.add(StorePanel.getInstance(sotore, car));
+        Main.App.add(StorePanel.getInstance(store, car));
         Main.App.add(new UserPanel());
 
         Main.App.setVisible(true);

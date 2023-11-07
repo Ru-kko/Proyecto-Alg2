@@ -16,13 +16,13 @@ import com.shop.tennis.service.ICarService;
 
 public class BuyDialog extends JDialog {
   private ICarService carService;
-  private Tennis shoewsToBuy;
+  private Tennis shoesToBuy;
   private Integer quantity = 1;
 
-  public BuyDialog(ICarService carService, Tennis shoewsToBuy) {
-    super(Main.getApp(), "Buy " + shoewsToBuy.getName(), true);
+  public BuyDialog(ICarService carService, Tennis shoesToBuy) {
+    super(Main.getApp(), "Buy " + shoesToBuy.getName(), true);
     this.carService = carService;
-    this.shoewsToBuy = shoewsToBuy;
+    this.shoesToBuy = shoesToBuy;
 
     this.setLayout(new BorderLayout());
     this.setLocationRelativeTo(null);
@@ -41,7 +41,7 @@ public class BuyDialog extends JDialog {
     var res = new JButton("Buy");
 
     res.addActionListener(e -> {
-      this.carService.addToCar(quantity, shoewsToBuy);
+      this.carService.addToCar(quantity, shoesToBuy);
       this.dispose();
     });
     return res;
