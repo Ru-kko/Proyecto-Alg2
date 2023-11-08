@@ -35,7 +35,7 @@ public class Main extends JFrame {
         ICarService car = new CarService();
 
         Main.App.add(StorePanel.getInstance(store, car));
-        Main.App.add(new UserPanel());
+        Main.App.add(UserPanel.getInstance(car));
 
         Main.App.setVisible(true);
     }
