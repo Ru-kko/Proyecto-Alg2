@@ -1,6 +1,5 @@
 package com.shop.tennis.service.impl;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,10 +27,16 @@ public class CarService implements ICarService {
   @Override
   public void addToCar(Integer quantity, Tennis tennis) {
     var idName = tennis.getBrand().name() + "-" + tennis.getName();
+    CarIndex item;
 
-    var item = new CarIndex(tennis, quantity,
-        new BigDecimal(tennis.getPrice().toString())
-            .multiply(new BigDecimal(quantity)));
+    if (content.containsKey(idName)) {
+      item = content.get(idName); 
+    } else {
+      item = new CarIndex();
+      item.setShoes(tennis);
+    }
+
+    item.setQuantity(item.getQuantity() + quantity);
     content.put(idName, item);
 
     for (var eventListener : subcribers) {
