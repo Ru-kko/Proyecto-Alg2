@@ -13,7 +13,7 @@ public class CarIndex {
   @Getter@Setter
   private Tennis shoes;
   @Getter
-  private Integer quantity;
+  private Integer quantity = 0;
   @Getter
   private BigDecimal totalPrice;
   
