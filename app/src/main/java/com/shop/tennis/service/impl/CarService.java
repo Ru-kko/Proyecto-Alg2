@@ -2,6 +2,7 @@ package com.shop.tennis.service.impl;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class CarService implements ICarService {
   private List<EventListener<CarIndex>> subcribers;
 
   public CarService() {
-    this.subcribers = List.of();
+    this.subcribers = new LinkedList<EventListener<CarIndex>>();
     this.content = new HashMap<>();
   }
 
