@@ -17,14 +17,15 @@ import javax.swing.JTextArea;
 
 import com.shop.tennis.Errors.BadMethod;
 import com.shop.tennis.entity.Brands;
+import com.shop.tennis.entity.Tennis;
 import com.shop.tennis.service.ICarService;
 import com.shop.tennis.service.IStorageService;
 import com.shop.tennis.view.components.StoreTable;
 
 public class StorePanel extends BaseLayout {
   private static StorePanel INSTANCE;
-  private ICarService carService;
-  private IStorageService storageService;
+  private final ICarService carService;
+  private final IStorageService storageService;
   private StoreTable tableModel;
 
   private StorePanel(IStorageService storageService, ICarService carService) {
@@ -45,7 +46,7 @@ public class StorePanel extends BaseLayout {
 
     var nameSearchPanel = new JPanel();
     var nameSearchLabel = new JLabel("Name: ", JLabel.LEFT);
-    var textBox = new JTextArea();    
+    var textBox = new JTextArea();
 
     nameSearchPanel.setLayout(new BoxLayout(nameSearchPanel, BoxLayout.X_AXIS));
     nameSearchPanel.add(nameSearchLabel);
@@ -55,14 +56,15 @@ public class StorePanel extends BaseLayout {
     var brandSearchLabel = new JLabel("Brand: ", JLabel.LEFT);
     var brandsSelector = new JComboBox<String>();
 
-    for (var b: Brands.values()) {
+    brandsSelector.addItem("NONE");
+    for (var b : Brands.values()) {
       brandsSelector.addItem(b.name());
     }
     brandSearchPanel.setLayout(new BoxLayout(brandSearchPanel, BoxLayout.X_AXIS));
     brandSearchPanel.add(brandSearchLabel);
     brandSearchPanel.add(brandsSelector);
 
-    filterPanel.add(nameSearchPanel); 
+    filterPanel.add(nameSearchPanel);
     filterPanel.add(Box.createRigidArea(new Dimension(0, 5)));
     filterPanel.add(brandSearchPanel);
 
@@ -70,7 +72,11 @@ public class StorePanel extends BaseLayout {
     buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
 
     var clearBtn = new JButton("Clear");
-    var fillBtn = new JButton(" Fill ");
+    clearBtn.addActionListener(a -> {
+      tableModel.updateContent(storageService.getProducts());
+    });
+
+    var fillBtn = getjButton(brandsSelector, textBox);
 
     buttonsPanel.add(fillBtn);
     buttonsPanel.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -80,6 +86,28 @@ public class StorePanel extends BaseLayout {
     res.add(Box.createRigidArea(new Dimension(10, 0)));
     res.add(buttonsPanel);
     return res;
+  }
+
+  private JButton getjButton(JComboBox<String> brandsSelector, JTextArea textBox) {
+    var fillBtn = new JButton(" Fill ");
+    fillBtn.addActionListener(a -> {
+      var tennis = new Tennis();
+      var brand = brandsSelector.getSelectedItem();
+
+      try {
+        assert brand != null;
+        tennis.setBrand(Brands.valueOf(brand.toString()));
+      } catch (IllegalArgumentException ignored) {}
+
+      try {
+        var name = textBox.getText();
+
+        tennis.setName(name);
+      } catch (NullPointerException ignored) {}
+
+      tableModel.updateContent(storageService.fill(tennis));
+    });
+    return fillBtn;
   }
 
   private JScrollPane buildTable() {
