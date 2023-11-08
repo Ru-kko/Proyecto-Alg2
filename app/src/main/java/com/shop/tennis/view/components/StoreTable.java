@@ -30,7 +30,7 @@ public class StoreTable extends AbstractTableModel {
     });
   }
 
-  public void updateConetnt(List<Tennis> content) {
+  public void updateContent(List<Tennis> content) {
     this.content = content;
     this.fireTableDataChanged();
   }

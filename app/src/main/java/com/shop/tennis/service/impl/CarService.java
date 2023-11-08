@@ -47,14 +47,14 @@ public class CarService implements ICarService {
       for (var eventListener : subcribers) {
         eventListener.delete(item);
       }
-  
+
       content.remove(idName);
     }
-    
+
   }
 
   @Override
-  public void subcribe(EventListener<CarIndex> observer) {
+  public void subscribe(EventListener<CarIndex> observer) {
     this.subcribers.add(observer);
   }
 }
