@@ -1,8 +1,6 @@
 package com.shop.tennis.view.components;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.FlowLayout;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -32,18 +30,33 @@ public class BuyDialog extends JDialog {
     var btns = new JPanel();
     btns.setLayout(new FlowLayout());
     btns.add(getBuyBtn());
-    btns.add(new Button("Btn b"));
+    btns.add(getCloseBtn());
 
     this.add(btns, BorderLayout.SOUTH);
   }
 
+  private JButton getCloseBtn() {
+    var res = new JButton("Cancel ");
+
+    res.setBackground(Color.RED);
+    res.setForeground(Color.WHITE);
+
+    res.addActionListener(e -> {
+      this.dispose();
+    });
+
+    return  res;
+  }
   private JButton getBuyBtn() {
     var res = new JButton("Buy");
+
+    res.setBackground(Color.GREEN);
 
     res.addActionListener(e -> {
       this.carService.addToCar(quantity, shoesToBuy);
       this.dispose();
     });
+
     return res;
   }
 
