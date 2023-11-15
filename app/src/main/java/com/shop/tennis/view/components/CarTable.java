@@ -4,8 +4,10 @@ import com.shop.tennis.entity.CarIndex;
 import com.shop.tennis.service.ICarService;
 import com.shop.tennis.util.EventListener;
 
-import javax.swing.*;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,18 @@ public class CarTable extends AbstractTableModel implements EventListener<CarInd
       var idName = i.getShoes().getBrand().name() + "-" + i.getShoes().getName();
       this.content.put(idName, i);
     }
+
+    table.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        JTable target = (JTable) e.getSource();
+        int row = target.getSelectedRow();
+        var dialog = new DeleteDialog(carService, entryList.get(row).getShoes());
+
+        dialog.setVisible(true);
+        // TODO delete a item
+      }
+    });
   }
   
   @Override
